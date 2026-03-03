@@ -19,11 +19,10 @@
 		ArrowUp,
 		ArrowDown
 	} from '@lucide/svelte';
-
-	// State for mobile menu
+	import { resolve } from '$app/paths';
+	import logo from '';
 	let mobileOpen = false;
 
-	// Navigation links
 	const navLinks = [
 		{ href: '#about', label: 'O que somos' },
 		{ href: '#how-it-works', label: 'Como funciona' },
@@ -31,7 +30,6 @@
 		{ href: '#plans', label: 'Planos' }
 	];
 
-	// Features for About Section
 	const features = [
 		{
 			icon: Shield,
@@ -55,7 +53,6 @@
 		}
 	];
 
-	// Steps for How It Works Section
 	const steps = [
 		{
 			icon: UserPlus,
@@ -91,7 +88,6 @@
 		}
 	];
 
-	// Scoring data
 	const positiveScoring = [
 		{ action: 'Gol marcado', points: '+8' },
 		{ action: 'Assistência', points: '+5' },
@@ -110,7 +106,6 @@
 		{ action: 'Gol sofrido (goleiro)', points: '-1' }
 	];
 
-	// Plans data
 	const plans = [
 		{
 			name: 'Free',
@@ -157,7 +152,6 @@
 		}
 	];
 
-	// Values for Mission Section
 	const values = [
 		{ icon: Shield, label: 'Transparência' },
 		{ icon: Cpu, label: 'Inovação' },
@@ -188,9 +182,9 @@
 		class="border-border/50 bg-background/80 fixed top-0 z-50 w-full border-b backdrop-blur-xl"
 	>
 		<nav class="mx-auto flex max-w-7xl items-center justify-between px-6 py-4">
-			<a href="/" class="flex items-center gap-2">
+			<a href="#top" class="flex items-center gap-2">
 				<div class="bg-primary flex h-8 w-8 items-center justify-center rounded-lg">
-					<span class="font-heading text-primary-foreground text-sm font-bold">D</span>
+					<img src={}>
 				</div>
 				<span class="font-heading text-foreground text-xl font-bold tracking-tight">
 					DRAFTFUT
@@ -199,7 +193,7 @@
 			<div class="hidden items-center gap-8 md:flex">
 				{#each navLinks as link (link)}
 					<a
-						href={link.href}
+						href={resolve(link.href)}
 						class="text-muted-foreground hover:text-foreground text-sm transition-colors"
 					>
 						{link.label}
@@ -228,9 +222,9 @@
 		{#if mobileOpen}
 			<div class="border-border/50 bg-background/95 border-t backdrop-blur-xl md:hidden">
 				<div class="flex flex-col gap-4 px-6 py-6">
-					{#each navLinks as link (label)}
+					{#each navLinks as link (link.href)}
 						<a
-							href={link.href}
+							href={resolve(link.href)}
 							on:click={() => (mobileOpen = false)}
 							class="text-muted-foreground hover:text-foreground text-base transition-colors"
 						>
@@ -339,7 +333,7 @@
 						</p>
 					</div>
 					<div class="grid grid-cols-1 gap-4 sm:grid-cols-2">
-						{#each features as feature}
+						{#each features as feature (feature)}
 							<div
 								class="group border-border/50 bg-card hover:border-primary/30 hover:bg-card/80 rounded-2xl border p-6 transition-all"
 							>
@@ -380,7 +374,7 @@
 					</p>
 				</div>
 				<div class="mt-16 grid grid-cols-1 gap-8 md:grid-cols-5">
-					{#each steps as step, index}
+					{#each steps as step, index (step)}
 						<div class="group relative text-center">
 							{#if index < steps.length - 1}
 								<div
@@ -431,7 +425,7 @@
 							<h3 class="text-foreground text-xl font-bold">Pontuação Positiva</h3>
 						</div>
 						<div class="flex flex-col gap-3">
-							{#each positiveScoring as item}
+							{#each positiveScoring as item (item)}
 								<div
 									class="border-border/30 bg-secondary/30 flex items-center justify-between rounded-xl border px-5 py-3"
 								>
@@ -451,7 +445,7 @@
 							<h3 class="text-foreground text-xl font-bold">Pontuação Negativa</h3>
 						</div>
 						<div class="flex flex-col gap-3">
-							{#each negativeScoring as item}
+							{#each negativeScoring as item (item)}
 								<div
 									class="border-border/30 bg-secondary/30 flex items-center justify-between rounded-xl border px-5 py-3"
 								>
@@ -484,7 +478,7 @@
 					</p>
 				</div>
 				<div class="mt-16 grid grid-cols-1 gap-8 md:grid-cols-3">
-					{#each plans as plan}
+					{#each plans as plan (plan.cta)}
 						<div
 							class={`relative flex flex-col rounded-3xl border p-8 transition-all hover:scale-[1.02] ${
 								plan.highlighted
@@ -510,7 +504,7 @@
 								<p class="text-muted-foreground mt-4 text-sm">{plan.description}</p>
 							</div>
 							<ul class="flex-1 space-y-4">
-								{#each plan.features as feature}
+								{#each plan.features as feature (feature)}
 									<li class="flex items-center gap-3">
 										<div
 											class={`flex h-5 w-5 items-center justify-center rounded-full ${
@@ -572,7 +566,7 @@
 						</div>
 						<h3 class="font-heading text-foreground text-2xl font-bold">VALORES</h3>
 						<div class="mt-4 flex flex-wrap gap-2">
-							{#each values as value}
+							{#each values as value (value)}
 								<span
 									class="border-border/50 bg-secondary/50 text-foreground inline-flex items-center gap-1.5 rounded-full border px-3 py-1.5 text-xs"
 								>
@@ -624,9 +618,9 @@
 					</span>
 				</div>
 				<div class="flex flex-wrap items-center justify-center gap-6">
-					{#each navLinks as link}
+					{#each navLinks as link (link.href)}
 						<a
-							href={link.href}
+							href={resolve(link.href)}
 							class="text-muted-foreground hover:text-foreground text-sm transition-colors"
 						>
 							{link.label}
