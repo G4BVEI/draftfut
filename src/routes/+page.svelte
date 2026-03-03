@@ -20,7 +20,6 @@
 		ArrowDown
 	} from '@lucide/svelte';
 	import { resolve } from '$app/paths';
-	import logo from '';
 	let mobileOpen = false;
 
 	const navLinks = [
@@ -184,7 +183,7 @@
 		<nav class="mx-auto flex max-w-7xl items-center justify-between px-6 py-4">
 			<a href="#top" class="flex items-center gap-2">
 				<div class="bg-primary flex h-8 w-8 items-center justify-center rounded-lg">
-					<img src={}>
+					<span class="font-heading text-primary-foreground text-sm font-bold">D</span>
 				</div>
 				<span class="font-heading text-foreground text-xl font-bold tracking-tight">
 					DRAFTFUT
